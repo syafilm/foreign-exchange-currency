@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+
+  foreignexchangecurrency:
+    container_name: foreignexchangecurrency
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/foreignexchange'
+      - '/usr/src/foreignexchange/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
