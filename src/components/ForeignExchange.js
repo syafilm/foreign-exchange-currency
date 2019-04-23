@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import ItemList from './ItemList'
+import Item from './Item'
 import uuid from 'uuid'
-import request from 'superagent'
 import Select from 'react-select'
 
 class ForeignExchange extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
+    state = {
       isEdit:false,
       currency:'100',
       defaultCurrency:[],
@@ -15,38 +12,43 @@ class ForeignExchange extends Component {
       theoptions:[],
       date: '',
     }
-  }
+
   baseApiUrlOptions = 'https://api.exchangeratesapi.io/latest?base=USD'
   baseApiUrl = 'https://api.exchangeratesapi.io/latest?base=USD&symbols=SGD,GBP,EUR,IDR'
-  
+
   componentDidMount(){
-    request.get(`${this.baseApiUrl}`).then(res =>{
-      let data = res.body.rates
-      let result = Object.keys(data).map(function(key) {
-        return ({
-          id:uuid(),
-          date:res.body.date,
-          price:data[key],
-          typeCurrency:key
-        })
-      })   
-      this.setState({
-        defaultCurrency : result.reverse(),
-        date : res.body.date
-      })   
-    })
-    request.get(`${this.baseApiUrlOptions}`).then(res =>{
-      let dataOptions = res.body.rates
-      let resultOptions = Object.keys(dataOptions).map(function(key) {
-        return ({
-          value:dataOptions[key],
-          label:key
-        })
-      })   
-      this.setState({
-        theoptions:resultOptions
-      })   
-    })
+    // request.get(`${this.baseApiUrl}`).then(res =>{
+    //   let data = res.body.rates
+    //   let result = Object.keys(data).map(function(key) {
+    //     return ({
+    //       id:uuid(),
+    //       date:res.body.date,
+    //       price:data[key],
+    //       typeCurrency:key
+    //     })
+    //   })
+    //   this.setState({
+    //     defaultCurrency : result.reverse(),
+    //     date : res.body.date
+    //   })
+    // })
+
+    // request.get(`${this.baseApiUrlOptions}`).then(res =>{
+    //   let dataOptions = res.body.rates
+    //   let resultOptions = Object.keys(dataOptions).map(function(key) {
+    //     return ({
+    //       value:dataOptions[key],
+    //       label:key
+    //     })
+    //   })
+    //   this.setState({
+    //     theoptions:resultOptions
+    //   })   
+    // })
+  }
+
+  getDefaultData = () => {
+
   }
 
   handleChangeEdit = () => {
@@ -55,14 +57,14 @@ class ForeignExchange extends Component {
     })
     if(this.state.currency === '' || this.state.currency === '0'){
       this.setState({
-        currency : '1'      
+        currency : '100'
       })
     }
   }
   
   handleChangeCurrency = (e) => {
     this.setState({
-      currency : e.target.value      
+      currency : e.target.value
     })
   }
 
@@ -78,7 +80,7 @@ class ForeignExchange extends Component {
     })
     this.setState({ defaultCurrency: newItems });
   }
-  
+
   handleSubmit = () => {
     let item = {
       id:uuid(),
@@ -102,15 +104,17 @@ class ForeignExchange extends Component {
     const options = this.state.theoptions    
     let currencyList = this.state.defaultCurrency.map((item) => {
       return(
-          <ItemList key={item.id} item={item} handleDelete={this.handleDelete} currency={this.state.currency} />        
+          <Item key={item.id} item={item} handleDelete={this.handleDelete} currency={this.state.currency} />        
       )
     })
+  
     return (
       <section className="h-100">
         <div className="h-100 container">
           <div className="row h-100 justify-content-center align-items-center">
             <div className="col-sm-5">
               <div className="d-block h-100 align-items-center">
+                <h3 className="mb-4 text-center">Foreign Exchange Currency</h3>
                 <div className="card">
                   <div className="card-header">
                     <div className="row">
@@ -135,7 +139,7 @@ class ForeignExchange extends Component {
                           </div>                        
                         }
                         </h4>
-                      </div>                      
+                      </div>
                     </div>
                   </div>
                   <div className="card-body scrolled">
@@ -143,7 +147,12 @@ class ForeignExchange extends Component {
                   </div>
                   <div className="card-footer">
                     <div className="input-group">
-                      <Select className="form-control p-0 border-0" value={selectedOption} onChange={this.handleChangeSelect} options={options} placeholder="Choose currency" />
+                      <Select 
+                        className="form-control p-0 border-0" 
+                        value={selectedOption} 
+                        onChange={this.handleChangeSelect} 
+                        options={options} 
+                        placeholder="Choose currency" />
                       <div className="input-group-append">
                         <button onClick={this.handleSubmit} className="btn btn-dark">
                           Submit
@@ -156,7 +165,7 @@ class ForeignExchange extends Component {
             </div>
           </div>
         </div>
-      </section>      
+      </section>
     );
   }
 }
