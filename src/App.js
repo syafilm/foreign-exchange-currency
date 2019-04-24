@@ -1,16 +1,10 @@
-import React, { Component } from 'react'
-import ForeignExchange from './components/ForeignExchange'
-import './App.scss'
-import './scss/additional.scss'
+import React from 'react'
+import { Body } from 'components'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <ForeignExchange/>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="App">
+    <Body />
+  </div>
+)
 
 export default App
