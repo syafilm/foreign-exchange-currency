@@ -6,6 +6,6 @@ WORKDIR /usr/src/foreignexchange
 ENV PATH /usr/src/foreignexchange/node_modules/.bin:$PATH
 
 COPY package.json /usr/src/foreignexchange/package.json
-RUN yarn install --silent
+RUN yarn install
 
 CMD ["yarn", "start"]
