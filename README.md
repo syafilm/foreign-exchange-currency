@@ -1,6 +1,3 @@
-# Foreign Exchange Currency
-Simple Foreign Exchange Currency based on this api https://api.exchangeratesapi.io/latest?base=USD
-
 # foreign-exchange-currency
   Simple Foreign Exchange Currency based on this api https://api.exchangeratesapi.io/latest?base=USD
    # Setup docker
