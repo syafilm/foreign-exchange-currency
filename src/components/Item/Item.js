@@ -8,12 +8,16 @@ class Item extends Component {
       handleDelete,
     } = this.props
 
+    /* eslint-disable */
     const confirm = window.confirm('Are you sure want to delete this record ?')
+    /* eslint-enable */
     if (confirm) {
       const { id } = item
       handleDelete(id)
     } else {
+      /* eslint-disable */
       console.log('You pressed Cancel!')
+      /* eslint-enable */
     }
   }
 
